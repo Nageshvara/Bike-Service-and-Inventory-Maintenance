@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Accessory Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/css/fetch.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2 class="mb-4">Accessory Details</h2>
+        <form>
+          <div class="mb-3">
+            <label for="shopname" class="form-label">Enter Shop Name:</label>
+            <input type="text" class="form-control" id="shopname">
+          </div>
+          <button type="button" class="btn btn-primary" id="fetchbutton">Fetch Data</button>
+        </form>
+        <div id="result" class="mt-4"></div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-analytics.js";
+      import { getDatabase,get, ref, set, child, push,query, orderByChild, equalTo} from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyADvT-TykN6mAIHNrR03vQWC54RpWzVM3Q",
+        authDomain: "servspare-53726.firebaseapp.com",
+        databaseURL: "https://servspare-53726-default-rtdb.firebaseio.com",
+        projectId: "servspare-53726",
+        storageBucket: "servspare-53726.appspot.com",
+        messagingSenderId: "109864302678",
+        appId: "1:109864302678:web:e1e18eec7c9614a5b563f7",
+        measurementId: "G-3W4BJW10C4"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db = getDatabase();
+    
+
+
+     
+      function getDataByShopname() {
+  var shopname = document.getElementById("shopname").value;
+  var shopRef = ref(db, "shopnames/" + shopname);
+  get(shopRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      console.log("Data found for the shopname: ", shopname);
+      var table = document.createElement("table");
+      var headerRow = document.createElement("tr");
+      var accessoryNameHeader = document.createElement("th");
+      accessoryNameHeader.textContent = "Accessory Name";
+      var countHeader = document.createElement("th");
+      countHeader.textContent = "Count";
+      headerRow.appendChild(accessoryNameHeader);
+      headerRow.appendChild(countHeader);
+      table.appendChild(headerRow);
+      snapshot.forEach((childSnapshot) => {
+        var childData = childSnapshot.val();
+        var row = document.createElement("tr");
+        var accessoryNameCell = document.createElement("td");
+        accessoryNameCell.textContent = childData.accessoryname;
+        var countCell = document.createElement("td");
+        countCell.textContent = childData.count;
+        row.appendChild(accessoryNameCell);
+        row.appendChild(countCell);
+        table.appendChild(row);
+      });
+      var resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "";
+      resultDiv.appendChild(table);
+    } else {
+      console.log("No data found for the shopname: ", shopname);
+      var resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "No data found for the shopname: " + shopname;
+    }
+  }).catch((error) => {
+    console.error("Data retrieval failed: ", error.message);
+  });
+}
+
+
+    document.getElementById("fetchbutton").addEventListener("click",getDataByShopname);
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>SERVSPARE</title>
+    <link rel="stylesheet" href="static/css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </head>
+  <body style="background-color: #FFE4C4;">
+    <nav class=" navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">SERVSPARE</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="index.html">Home</a>
+          <a class="nav-item nav-link" href="#">Features</a>
+          <a class="nav-item nav-link" href="#">Pricing</a>
+          <a class="nav-item nav-link disabled" href="#">Contact</a>
+        </div>
+      </div>
+    </nav>
+    <div class="owner-log">
+      <img class="owner-img" src="https://cdn-icons-png.flaticon.com/512/2761/2761035.png" alt="">
+    </div>
+    <div class="login">
+      <form class="log-form" action="index.html" method="post">
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputEmail1" class="form-label">USERNAME</label>
+          <input type="text" class="form-control" id="login-email" aria-describedby="emailHelp" required="">
+          <div id="emailHelp" class="form-text"></div>
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="login-password" required="">
+        </div>
+
+      </form>
+      <button id="sub-btn"  type="submit" class="btn btn-log btn-primary">submit</button>
+      <br>
+      <br>
+      <a class="lin" style="text-decoration: none;" id="register">Not yet registered?</a>
+    </div>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyBwjPsDkOah7Y4aUrNAesUzeO1X3YTQwYk",
+        authDomain: "bike-sevice-and-equipments.firebaseapp.com",
+        databaseURL: "https://bike-sevice-and-equipments-default-rtdb.firebaseio.com",
+        projectId: "bike-sevice-and-equipments",
+        storageBucket: "bike-sevice-and-equipments.appspot.com",
+        messagingSenderId: "263673384043",
+        appId: "1:263673384043:web:60924312f51a97bdf7f52e",
+        measurementId: "G-36EFBZNM3B"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
+
+
+      const db = getDatabase();
+    var username = document.getElementById("login-email")
+
+    var passwordlo = document.getElementById("login-password");
+
+    var login = document.getElementById("sub-btn");
+
+    function checkUser(){
+        const dbr = ref(db);
+
+        get(child(dbr,"register/"+username.value)).then((snapshot)=>{
+          if(snapshot.exists()){
+            if(username.value == snapshot.val().Username && passwordlo.value == snapshot.val().Password1){
+              window.location.href="{{ url_for('owneroptions') }}";
+              alert("Success!")
+            }
+            else{
+              alert("No User Found !!");
+            }
+          }
+          else{
+            alert("No User Found !!");
+          }
+        }).catch((error)=>{
+          alert("Unsccuessful !"+error);
+        })
+    }
+
+  function navigate(){
+    window.location.href="{{ url_for('register') }}";
+  }
+
+  login.addEventListener("click",checkUser);
+  document.getElementById("register").addEventListener("click",navigate);
+    </script>
+  </body>
+
+
+</html>

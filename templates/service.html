@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/7123c0e2af.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <title>Predict Service Date</title>
+</head>
+<body class="optionbody">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <i class="fa-solid fa-motorcycle fa-bounce fa-2x"></i>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-4">
+          <label for="kilometreridden" class="form-label">Number of Kilometres Ridden</label>
+          <input type="number" class="form-control" id="kilometreridden" value="Mark" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        
+        <div class="col-md-3">
+          <label for="engprob" class="form-label">Do you face any engine problem ? </label>
+          <select class="form-select" id="engprob" required>
+            <option value="1">Choose</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+          <div class="invalid-feedback">
+            Please select a valid option.
+          </div>
+        </div>
+        <div class="col-md-3">
+            <label for="batteryprob" class="form-label">Do you face any battery problem ? </label>
+            <select class="form-select" id="batteryprob" required>
+              <option value="1">Choose</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid option.
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="breakissue" class="form-label">Do you face any breaking issues ? </label>
+            <select class="form-select" id="breakissue" required>
+              <option value="1">Choose</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid option.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="delvdate" class="form-label">Vehicle Delivery Date</label>
+            <input type="date" class="form-control" id="delvdate" value="Otto" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Submit details</button>
+        </div>
+      </form>
+      <div>
+        <h1>YOUR TENTATIVE SERVICE DATE :</h1> <br>
+        <p id="tentdate"></p>
+        <p id="engineproblem"></p>
+        <p id="batteryproblem"></p>
+        <p id="breakissues"></p>
+      </div>
+      <script>
+        document.getElementById("delvdate").addEventListener("change", function() {
+          var input = this.value;
+          var currentTime = new Date();
+          var dateEntered = new Date(input);
+          var curyear = currentTime.getFullYear();
+          var year = dateEntered.getFullYear();
+          const diffTime = Math.abs(currentTime - dateEntered);   
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1; 
+          console.log(diffDays + " days");
+          console.log(curyear);
+          console.log(year);
+          calculateDate(diffDays);
+        });
+        function calculateDate(diffDays){
+          var res = document.getElementById("tentdate");
+          var engres = document.getElementById("engineproblem");
+          var batteryres = document.getElementById("batteryproblem");
+          var breakres = document.getElementById("breakissues");
+          var kilometres = document.getElementById("kilometreridden").value;
+          var engprob = document.getElementById("engprob").value;
+          var batteryprob = document.getElementById("batteryprob").value;
+          var breakissue = document.getElementById("breakissue").value;
+          if(kilometres >=0 && kilometres < 2500){
+            var reqkms= 2500 - kilometres;
+            var avgkms= kilometres/diffDays;
+            var reqdays = reqkms/avgkms;
+            var currentTime = new Date();
+            currentTime.setDate(currentTime.getDate()+reqdays);
+            if(engprob == 'Yes'){
+              reqdays = reqdays-20;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              engres.innerHTML = "You need to change the engine oil and check your carburettor tuning !";
+            }
+            if(batteryprob == 'Yes'){
+              reqdays = reqdays-30;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              batteryres.innerHTML = "You need to charge the battery or change it !";
+            }
+            if(breakissue == 'Yes'){
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              breakres.innerHTML = "You need to change the break pad !";
+            }
+            res.innerHTML=currentTime;
+          }
+          else if (kilometres >= 2500 && kilometres < 6000){
+            var reqkms= 6000 - kilometres;
+            var avgkms= kilometres/diffDays;
+            var reqdays = reqkms/avgkms;
+            var currentTime = new Date();
+            currentTime.setDate(currentTime.getDate()+reqdays);
+            if(engprob == 'Yes'){
+              reqdays = reqdays-20;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              engres.innerHTML = "You need to change the engine oil and check your carburettor tuning !";
+            }
+            if(batteryprob == 'Yes'){
+              reqdays = reqdays-30;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              batteryres.innerHTML = "You need to charge the battery or change it !";
+            }
+            if(breakissue == 'Yes'){
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              breakres.innerHTML = "You need to change the break pad !";
+            }
+            res.innerHTML=currentTime;
+          }
+          else if (kilometres >= 6000 && kilometres < 10000){
+            var reqkms= 10000 - kilometres;
+            var avgkms= kilometres/diffDays;
+            var reqdays = reqkms/avgkms;
+            var currentTime = new Date();
+            currentTime.setDate(currentTime.getDate()+reqdays);
+            if(engprob == 'Yes'){
+              reqdays = reqdays-20;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              engres.innerHTML = "You need to change the engine oil and check your carburettor tuning !";
+            }
+            if(batteryprob == 'Yes'){
+              reqdays = reqdays-30;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              batteryres.innerHTML = "You need to charge the battery or change it !";
+            }
+            if(breakissue == 'Yes'){
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              breakres.innerHTML = "You need to change the break pad !";
+            }
+            res.innerHTML=currentTime;
+          }
+          else {
+            reqdays = 60;
+            currentTime.setDate(currentTime.getDate()+reqdays);
+            if(engprob == 'Yes'){
+              reqdays = reqdays-20;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              engres.innerHTML = "You need to change the engine oil and check your carburettor tuning !";
+            }
+            if(batteryprob == 'Yes'){
+              reqdays = reqdays-30;
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              batteryres.innerHTML = "You need to charge the battery or change it !";
+            }
+            if(breakissue == 'Yes'){
+              currentTime.setDate(currentTime.getDate()+reqdays);
+              breakres.innerHTML = "You need to change the break pad !";
+            }
+            res.innerHTML=currentTime;
+          }
+        }
+      </script>
+</body>
+</html>

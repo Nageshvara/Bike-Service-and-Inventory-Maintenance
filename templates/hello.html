@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>SERVSPARE</title>
+    <link rel="stylesheet" href="static/css/helloa.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </head>
+  <body style="background-color: #FFE4C4;" >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">SERVSPARE</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="index.html">Home</a>
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </div>
+  </div>
+</nav>
+    <div class="img">
+        <img class="reg-img" src="https://cdn-icons-png.flaticon.com/128/3456/3456426.png" alt="">
+    </div>
+    <div class="owner-reg">
+      <form class="reg-form" action="" method="">
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputNAME1" class="form-label">Name</label>
+          <input type="text" class="form-control" id="reg-name" aria-describedby="emailHelp" required="">
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="reg-email" aria-describedby="emailHelp" required="">
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="reg-password" required="">
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputNAME1" class="form-label">Confirm password</label>
+          <input type="password" class="form-control" id="reg-confirm" aria-describedby="emailHelp" required="">
+          <div class="invalid-tooltip">
+            Not same.
+          </div>
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputNAME1" class="form-label">Gender</label>
+          <select id="reg-gen" class="form-select" name="">
+            <option selected>SELECT</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputNAME1" class="form-label">Contact Number</label>
+          <input type="tel" class="form-control" id="reg-contact" aria-describedby="emailHelp" required="">
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="exampleInputNAME1" class="form-label">Address</label>
+          <textarea id="reg-address" name="address" rows="4" cols="50"></textarea>
+        </div>
+
+      </form>
+      <button id="reg-btn" type="submit" class="btn btn-log btn-primary">SUBMIT</button>
+      <br>
+      <a  id="newregister" style="text-decoration: none;" >Back to Login</a>
+
+    </div>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyBwjPsDkOah7Y4aUrNAesUzeO1X3YTQwYk",
+        authDomain: "bike-sevice-and-equipments.firebaseapp.com",
+        databaseURL: "https://bike-sevice-and-equipments-default-rtdb.firebaseio.com",
+        projectId: "bike-sevice-and-equipments",
+        storageBucket: "bike-sevice-and-equipments.appspot.com",
+        messagingSenderId: "263673384043",
+        appId: "1:263673384043:web:60924312f51a97bdf7f52e",
+        measurementId: "G-36EFBZNM3B"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
+
+      const db = getDatabase();
+      var username = document.getElementById("reg-name");
+      var emaill = document.getElementById("reg-email");
+      var password = document.getElementById("reg-password");
+      var password2 = document.getElementById("reg-confirm");
+      var gender = document.getElementById("reg-gen");
+      var contact = document.getElementById("reg-contact");
+      var address = document.getElementById("reg-address");
+
+      var register = document.getElementById("reg-btn");
+
+      function registers(){
+        set(ref(db , "customer/"+username.value),{
+         Username: username.value,
+         email: emaill.value,
+         Password1: password.value,
+         Password2: password2.value,
+         Gender: gender.value,
+         Contact: contact.value,
+         Address: address.value,
+
+        })
+          .then(()=>{
+         alert("data stored");
+          })
+          .catch((error)=>{
+         alert("error"+error)
+          });
+
+        }
+
+
+      register.addEventListener('click', registers);
+
+      function selectData(){
+        const dbr = ref(db);
+
+        get(child(dbr,"customer/"+username.value)).then((snapshot)=>{
+          if(snapshot.exists()){
+            emaill.value = snapshot.val().email;
+            password.value = snapshot.val().Password1;
+          }
+          else{
+            alert("No User Found !!");
+          }
+        }).catch((error)=>{
+          alert("Unsccuessful !"+error);
+        })
+      }
+
+      function updateData(){
+        update(ref(db,"customer/"+username.value),{
+              email:emaill.value,
+              Password1:password.value,
+              Password2:password2.value
+          }).then(()=>{
+              alert("Data is Entered");
+          }).catch((error)=>{
+              alert("Unsuccessful"+error);
+          });
+      }
+
+      function navigate(){
+        window.location.href="{{ url_for('hi') }}";
+      }
+
+      document.getElementById("newregister").addEventListener("click",navigate);
+
+    </script>
+
+
+  </body>
+
+
+</html>
