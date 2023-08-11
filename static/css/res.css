@@ -1,0 +1,45 @@
+.service-form{
+    margin-top: 100px;
+  }
+  .optionbody{
+    background-color: bisque;
+  }
+  .c1{
+    margin-left: 550px;
+    margin-top: 50px;
+  }
+  .c2{
+    margin-left: 550px;
+    margin-top: 50px;
+  }
+  .c3{
+    margin-left: 550px;
+    margin-top: 50px;
+  }
+  .c4{
+    margin-left: 550px;
+    margin-top: 50px;
+  }
+  .c5{
+    margin-left: 550px;
+    margin-top: 50px;
+  }
+  .c6{
+    margin-left: 750px;
+    margin-top: 50px;
+  }
+  .result{
+    margin-top: 50px;
+    margin-left: 70px;
+    text-align: center;
+  }
+  .formm{
+    text-align: center;
+    margin-top: 205px;
+  }
+  .img-form{
+    width: 150px;
+    position: absolute;
+    left: 700px;
+    margin-top: 20px;
+  }

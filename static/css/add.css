@@ -1,0 +1,24 @@
+.text{
+  margin-left:560px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.add{
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-left: 500px;
+  margin-top: 250px;
+}
+.item{
+  margin-left: 125px;
+}
+.add-img{
+  position: absolute;
+  left: 675px;
+  width: 150px;
+}
+.btt{
+  margin-top: 50px;
+  margin-right: 525px;
+}

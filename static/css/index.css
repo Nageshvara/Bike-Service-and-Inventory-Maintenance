@@ -1,0 +1,26 @@
+.navi{
+    background-color:#5A5A5A;
+}
+.owner-log{
+
+  height:300px;
+}
+
+.owner-img{
+  position: absolute;
+  left: 650px;
+  top: 70px;
+  width: 250px;
+}
+.log-form{
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 550px;
+}
+.lin{
+  margin-left: 550px;
+
+}
+.btn{
+  margin-left: 550px;
+}
